@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commute Briefing — May 23, 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0B0B0D;
+  --text: #EDEAE2;
+  --accent: #E8823A;
+  --muted: #7A7670;
+  --divider: #1E1D1B;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  min-height: 100vh;
+  padding: 0 24px 120px;
+}
+
+/* ── MASTHEAD ─────────────────────────────────────── */
+.masthead {
+  text-align: center;
+  padding: 80px 0 64px;
+  border-bottom: 1px solid var(--divider);
+  margin-bottom: 0;
+}
+
+.masthead-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.masthead-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(56px, 9vw, 96px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+
+.masthead-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.masthead-rule {
+  width: 48px;
+  height: 2px;
+  background: var(--accent);
+  margin: 24px auto 0;
+  border: none;
+}
+
+/* ── STORIES LIST ─────────────────────────────────── */
+.stories {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.story {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 0 40px;
+  align-items: start;
+  padding: 64px 0;
+  border-bottom: 1px solid var(--divider);
+  position: relative;
+}
+
+.story:last-child {
+  border-bottom: none;
+}
+
+/* Rank number */
+.rank {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(80px, 12vw, 120px);
+  font-weight: 900;
+  line-height: 0.85;
+  color: var(--divider);
+  letter-spacing: -0.04em;
+  user-select: none;
+  padding-top: 8px;
+  transition: color 0.2s ease;
+}
+
+.story:hover .rank {
+  color: #2A2825;
+}
+
+/* Story body */
+.story-body {}
+
+.story-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.story-headline {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(22px, 3.2vw, 30px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+.story-summary {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #B8B4AC;
+  max-width: 600px;
+}
+
+.story-summary strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── FOOTER ───────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 80px 0 0;
+  border-top: 1px solid var(--divider);
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.footer-wordmark {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.footer-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 640px) {
+  body { padding: 0 16px 80px; }
+  .story {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 48px 0;
+  }
+  .rank {
+    font-size: 64px;
+    margin-bottom: 16px;
+  }
+  .masthead { padding: 56px 0 48px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── MASTHEAD ──────────────────────────────────── -->
+<header class="masthead">
+  <p class="masthead-eyebrow">Daily Intelligence Digest</p>
+  <h1 class="masthead-title">COMMUTE<br>BRIEFING</h1>
+  <p class="masthead-date">Saturday, May 23 &nbsp;·&nbsp; 2026</p>
+  <hr class="masthead-rule">
+</header>
+
+<!-- ── STORIES ───────────────────────────────────── -->
+<main class="stories">
+
+  <!-- 1 -->
+  <article class="story">
+    <div class="rank">01</div>
+    <div class="story-body">
+      <span class="story-tag">Physical Hardware</span>
+      <h2 class="story-headline">Google's AI Glasses Are Basically Terminator Vision</h2>
+      <p class="story-summary">Google demoed prototype <strong>Android XR glasses</strong> that overlay Gemini-powered translation, live navigation, and contextual information directly into your field of view — no phone needed. They're "almost there," which in Google hardware language means two product cycles and a quiet discontinuation, or a category-defining product. Either way, the race for the face is on.</p>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="story">
+    <div class="rank">02</div>
+    <div class="story-body">
+      <span class="story-tag">Industry · Hardware</span>
+      <h2 class="story-headline">Jensen Huang Just Found a $200 Billion Market That Didn't Exist</h2>
+      <p class="story-summary">Nvidia's CEO says <strong>CPUs redesigned from scratch for AI agents</strong> represent the company's next massive opportunity — a $200B market he's calling "brand new." When Jensen Huang points at a number with that level of conviction, the world's chip roadmaps tend to quietly pivot within six months.</p>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="story">
+    <div class="rank">03</div>
+    <div class="story-body">
+      <span class="story-tag">Mind-Bending Theory</span>
+      <h2 class="story-headline">Frontier AI Cannot Predict the Future of Science</h2>
+      <p class="story-summary">A new benchmark called <strong>CUSP</strong> tested whether today's best AI models can forecast scientific progress across 4,760 real-world events — and they fail systematically, unable to reliably predict whether breakthroughs will happen or when. The implication is unsettling: the systems we're using to accelerate research are blind to the shape of the very frontier they're pushing.</p>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="story">
+    <div class="rank">04</div>
+    <div class="story-body">
+      <span class="story-tag">Efficiency · Research</span>
+      <h2 class="story-headline">95% Fewer Reasoning Tokens. Same Intelligence.</h2>
+      <p class="story-summary"><strong>SR²AM</strong> is a new agentic framework that competes with 120–355B parameter giants while consuming up to 95.3% fewer reasoning tokens — by building a world-model simulation layer that decides how much to think before acting. Efficiency isn't just a cost metric anymore; it's the moat that separates the deployable from the theoretical.</p>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="story">
+    <div class="rank">05</div>
+    <div class="story-body">
+      <span class="story-tag">Open-Source Drop</span>
+      <h2 class="story-headline">Someone Finally Encrypted the Model Weights Themselves</h2>
+      <p class="story-summary"><strong>LoREnc</strong> is a training-free framework that protects foundation models and LoRA adapters using spectral truncation and orthogonal reparameterization — unauthorized users get structurally collapsed garbage; authorized users get full performance, all with under 1% computational overhead. This is the first serious answer to the "what happens when someone steals your fine-tuned weights" question.</p>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="story">
+    <div class="rank">06</div>
+    <div class="story-body">
+      <span class="story-tag">Ethics · Controversy</span>
+      <h2 class="story-headline">AI Brought Dead Pilots Back to Life — The NTSB Had to Shut Down</h2>
+      <p class="story-summary">Researchers used AI to <strong>reconstruct cockpit voice recordings from spectrogram images</strong> of deceased pilots, forcing the National Transportation Safety Board to temporarily block all public access to its docket system. This is the first time a US safety agency has gone dark because of AI-powered forensic reconstruction — and it will not be the last.</p>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="story">
+    <div class="rank">07</div>
+    <div class="story-body">
+      <span class="story-tag">Business · Milestone</span>
+      <h2 class="story-headline">Anthropic Is About to Print Its First Profit</h2>
+      <p class="story-summary">Anthropic told investors it will <strong>more than double revenue to ~$10.9 billion in Q2 2026</strong> — on track for its first ever profitable quarter. The "we'll figure out revenue later" era of frontier AI labs is officially over; the question now is whether OpenAI and Google DeepMind follow suit or get left holding the burn rate.</p>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="story">
+    <div class="rank">08</div>
+    <div class="story-body">
+      <span class="story-tag">Creative AI · Music</span>
+      <h2 class="story-headline">Spotify Just Legalized AI Remixes — And Artists Get Paid</h2>
+      <p class="story-summary">Spotify and Universal Music Group struck a deal letting <strong>Premium subscribers create AI-generated covers and remixes</strong> of licensed songs, with participating artists receiving a revenue share. The creative economy just got its most consequential licensing arrangement since Napster burned the old model down, except this time the labels are at the table from day one.</p>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="story">
+    <div class="rank">09</div>
+    <div class="story-body">
+      <span class="story-tag">Startup · Funding</span>
+      <h2 class="story-headline">$700 Million for an AI Interface Nobody Has Seen Yet</h2>
+      <p class="story-summary"><strong>Hark raised a $700M Series A</strong> for what it calls a "universal AI interface" — multimodal models dropping this summer that promise to work seamlessly across all your existing products and services. The pitch is maximalist and the secrecy is deliberate; whether the product matches the valuation will be the defining product story of Q3 2026.</p>
+    </div>
+  </article>
+
+  <!-- 10 -->
+  <article class="story">
+    <div class="rank">10</div>
+    <div class="story-body">
+      <span class="story-tag">Physical AI · Sustainability</span>
+      <h2 class="story-headline">Aluminum Prices Are Up 20% — AI Robots Are the Answer</h2>
+      <p class="story-summary">With aluminum prices surging 20%, recycling startups are deploying <strong>AI-powered sorting and recovery systems</strong> to extract critical minerals from waste streams at industrial scale. The intersection of climate urgency and agentic AI may quietly become the most important infrastructure build of the next decade — and nobody is talking about it at the main stage.</p>
+    </div>
+  </article>
+
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer class="footer">
+  <p class="footer-wordmark">COMMUTE BRIEFING</p>
+  <p class="footer-note">Curated from HuggingFace Daily Papers · TechCrunch AI · The Neuron · TLDR AI &nbsp;·&nbsp; May 23, 2026</p>
+</footer>
+
+</body>
+</html>
