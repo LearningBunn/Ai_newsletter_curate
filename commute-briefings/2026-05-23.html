@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commute Briefing — 2026-05-23</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0B0B0D;
+    --text: #EDEAE2;
+    --accent: #E8823A;
+    --muted: #7A776F;
+    --card-bg: #111114;
+    --border: #1E1E22;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    text-align: center;
+    padding: 72px 24px 56px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(232,130,58,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .masthead-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .masthead-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(56px, 10vw, 96px);
+    font-weight: 900;
+    line-height: 0.92;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .masthead-title span {
+    color: var(--accent);
+  }
+
+  .masthead-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .masthead-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* ── STORY LIST ── */
+  .story-list {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .story {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0 32px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  @media (max-width: 640px) {
+    .story {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .story-rank {
+      margin-bottom: -8px;
+    }
+  }
+
+  .story-rank {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(80px, 14vw, 120px);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--border);
+    color: rgba(232,130,58,0.13);
+    user-select: none;
+    letter-spacing: -0.04em;
+    padding-top: 4px;
+  }
+
+  .story-body {}
+
+  .story-tag {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(232,130,58,0.35);
+    border-radius: 3px;
+    padding: 3px 8px;
+    margin-bottom: 14px;
+  }
+
+  .story-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 700;
+    line-height: 1.18;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .story-summary {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #B8B5AF;
+    margin-bottom: 20px;
+  }
+
+  .story-hook-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .story-hook {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--accent);
+    border-left: 2px solid rgba(232,130,58,0.4);
+    padding-left: 14px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 48px 24px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .footer strong {
+    color: var(--accent);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <p class="masthead-eyebrow">Daily Intelligence Digest</p>
+  <h1 class="masthead-title">COMMUTE<br><span>BRIEFING</span></h1>
+  <p class="masthead-date">Saturday, 23 May 2026</p>
+  <p class="masthead-sub">10 high-signal AI stories · curated for your commute</p>
+</header>
+
+<!-- STORIES -->
+<main class="story-list">
+
+  <!-- 1 -->
+  <article class="story">
+    <div class="story-rank">1</div>
+    <div class="story-body">
+      <span class="story-tag">Industry Milestone</span>
+      <h2 class="story-headline">Anthropic Flips the Script: First Profitable Quarter Incoming</h2>
+      <p class="story-summary">Anthropic disclosed to investors it will more than double revenue, targeting approximately $10.9 billion in Q2 2026 — its first profitable quarter ever. The company has scaled rapidly on the back of Claude's API traction across enterprise and developer markets. This inflection point signals that frontier AI labs may finally be approaching economic sustainability without relying indefinitely on venture capital to fund compute.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">After years of burning billions to train frontier models, Anthropic just told investors it's doubling revenue to $10.9 billion — and turning a profit for the first time ever. The AI arms race has a new winner's podium.</p>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="story">
+    <div class="story-rank">2</div>
+    <div class="story-body">
+      <span class="story-tag">Hardware &amp; Chips</span>
+      <h2 class="story-headline">Jensen Huang Just Found Nvidia's Next $200 Billion Gold Mine</h2>
+      <p class="story-summary">Nvidia CEO Jensen Huang announced he has identified a "brand new" $200 billion market in CPUs specifically optimized for AI agents — a distinct category from GPU-accelerated training and inference. As agentic AI systems require orchestration layers, scheduling, and low-latency decision loops, demand for specialized processor architectures to manage agent fleets is emerging as the next silicon battleground. Nvidia's roadmap now explicitly targets this orchestration compute layer, moving beyond the GPU monoculture.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">GPUs dominated the first wave of AI. Now Jensen Huang says CPUs for AI agents are a $200 billion market nobody has claimed yet — and Nvidia is coming for it.</p>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="story">
+    <div class="story-rank">3</div>
+    <div class="story-body">
+      <span class="story-tag">Funding &amp; Startups</span>
+      <h2 class="story-headline">$700M Before Launch: Inside Hark's Bet on the 'Universal' AI Interface</h2>
+      <p class="story-summary">Hark, a secretive startup developing what it calls a "universal" AI interface, raised a $700M Series A — one of the largest pre-product rounds in tech history. The company plans to ship multimodal models this summer powering a personal AI platform, followed by custom hardware devices. The "universal interface" framing implies an OS-level substrate that abstracts across apps and services, positioning Hark as a potential platform-layer play for the AI-native computing era.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">A company nobody's heard of just raised $700 million to build a "universal" AI interface and custom hardware — before shipping a single product. This is either the next Apple, or the most expensive stealth demo in history.</p>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="story">
+    <div class="story-rank">4</div>
+    <div class="story-body">
+      <span class="story-tag">Mind-Bending Theory</span>
+      <h2 class="story-headline">We Asked AI to Predict Scientific Breakthroughs. It Confidently Failed.</h2>
+      <p class="story-summary">The CUSP benchmark (Cutoff-conditioned Unseen Scientific Progress), from Oxford and Stanford researchers, evaluates frontier AI models across 4,760 real scientific events on feasibility assessment, mechanistic reasoning, timing estimation, and generative solution design. Results show that while models identify plausible research directions, they systematically fail to predict whether advances will actually be realized — exhibiting strong overconfidence and response biases. Notably, AI's own progress is more predictable than breakthroughs in biology, chemistry, or physics.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">Researchers gave frontier AI models 4,760 real scientific questions and asked them to predict outcomes. The result? Systematic overconfidence, wrong timing estimates, and failures across the board. Turns out AI can't predict science — including its own.</p>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="story">
+    <div class="story-rank">5</div>
+    <div class="story-body">
+      <span class="story-tag">Mind-Bending Efficiency</span>
+      <h2 class="story-headline">95% Fewer Tokens, Same Performance: The Agent That Shames GPT-Scale Models</h2>
+      <p class="story-summary">SR²AM (Self-Regulated Simulative Reasoning Agentic LLM), from CMU and MBZUAI, decomposes agentic decision-making into three systems: reactive execution (System I), a simulative world-model (System II), and a learned self-regulator that determines when deep planning is worth the cost (System III). The framework achieves Pass@1 scores competitive with models 10–1,000× larger while using 25.8–95.3% fewer reasoning tokens across math, science, tabular analysis, and web tasks. The core insight: don't think hard unless you absolutely have to.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">What if your AI agent only used deep reasoning when it truly needed to? SR²AM does exactly that — beating models 1,000× its size using up to 95% fewer tokens. Efficiency just got a manifesto.</p>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="story">
+    <div class="story-rank">6</div>
+    <div class="story-body">
+      <span class="story-tag">Physical Hardware</span>
+      <h2 class="story-headline">Google's AI Glasses Are Real — and They Translate the World in Real Time</h2>
+      <p class="story-summary">At Google I/O, the company demonstrated working prototype Android XR glasses powered by Gemini, offering live language translation, turn-by-turn navigation, and contextual information overlaid directly in the user's field of view. Unlike previous smartglass attempts, these are tethered to Gemini's multimodal reasoning layer, enabling real-time language understanding and scene comprehension through the lens itself. The demo represents the closest any major tech company has come to a shipping consumer-grade AI-native wearable with genuine utility.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">Google just demoed prototype AI glasses that translate languages, navigate streets, and overlay Gemini's intelligence directly into your field of view — in real time. The AR future isn't coming. It's here.</p>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="story">
+    <div class="story-rank">7</div>
+    <div class="story-body">
+      <span class="story-tag">AI × Creator Economy</span>
+      <h2 class="story-headline">Spotify Just Legalized AI Fan Covers — With a Revenue Split for Artists</h2>
+      <p class="story-summary">Spotify and Universal Music Group struck a landmark agreement enabling Premium subscribers to create AI-generated covers and remixes of UMG-catalog tracks. Rather than blocking the technology, both parties structured a royalty-sharing mechanism where participating artists receive a portion of revenue from AI-generated derivatives. This framework represents the first major label–streaming platform deal that directly monetizes fan-created AI content, potentially becoming the industry template for handling AI-generated music at scale.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">Fan-made AI covers just went from piracy to profit-sharing. Spotify and Universal Music inked a deal letting you remix your favorite songs with AI — and the original artist gets a cut. The music industry just found its AI business model.</p>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="story">
+    <div class="story-rank">8</div>
+    <div class="story-body">
+      <span class="story-tag">AI Security</span>
+      <h2 class="story-headline">Samsung's Invisible Lock Makes Stealing AI Model Weights Completely Useless</h2>
+      <p class="story-summary">LoREnc, from Samsung Research, is a training-free security framework protecting foundation models and LoRA adapters from IP theft and model recovery attacks. The technique applies spectral truncation to suppress dominant low-rank components in weight matrices, compensates authorized LoRA adapters to restore full performance, and applies orthogonal reparameterization to obscure structural fingerprints. Unauthorized users receive structurally collapsed, unusable outputs; authorized users recover exact model performance with under 1% computational overhead — zero retraining required.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">Samsung built an invisible lock for AI model weights. Steal the model and all you get is garbage output. Authorized users get full performance back with no retraining needed. IP theft for LLMs just got dramatically harder.</p>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="story">
+    <div class="story-rank">9</div>
+    <div class="story-body">
+      <span class="story-tag">Emergent AI Use</span>
+      <h2 class="story-headline">Investigators Used AI to Reconstruct Dead Pilots' Voices. The NTSB Wasn't Ready.</h2>
+      <p class="story-summary">Following an aviation incident, investigators applied AI tools to spectrogram images from cockpit voice recorder data to reconstruct the speech of deceased pilots — bypassing traditional audio recovery limits by treating voice patterns as visual data amenable to image-based generative models. The reconstruction was detailed enough that the NTSB temporarily restricted public access to its docket system in response. The incident exposes how generative AI's multimodal capabilities are unlocking unexpected forensic applications with profound legal, evidentiary, and ethical implications.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">Someone fed cockpit voice recorder spectrograms into an AI and got back the voices of dead pilots. The NTSB immediately locked down its public database. Generative AI just walked into forensics — and nobody was ready for it.</p>
+    </div>
+  </article>
+
+  <!-- 10 -->
+  <article class="story">
+    <div class="story-rank">10</div>
+    <div class="story-body">
+      <span class="story-tag">AI Policy</span>
+      <h2 class="story-headline">White House Pumps the Brakes on Pre-Release AI Safety Reviews</h2>
+      <p class="story-summary">President Trump postponed an executive order that would have required pre-release government security reviews of AI models before public deployment, citing concerns with the order's language. The delay affects a mechanism that would have given federal agencies visibility into frontier model capabilities prior to market release — a structural safeguard against deploying systems with undisclosed national security implications. Critics argue the pause widens the already significant gap between AI capability advancement and the governance frameworks meant to oversee it.</p>
+      <p class="story-hook-label">60-Second Hook</p>
+      <p class="story-hook">The White House was about to require government safety checks on AI models before public release. That order is now on hold — over wording concerns. The gap between AI capability and government oversight just got a little wider.</p>
+    </div>
+  </article>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p><strong>Commute Briefing</strong> · 23 May 2026</p>
+  <p style="margin-top:8px;">Sources: TechCrunch AI · Hugging Face Daily Papers · Gmail Newsletters</p>
+</footer>
+
+</body>
+</html>
