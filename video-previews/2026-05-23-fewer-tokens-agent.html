@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>60s AI News | 95% Fewer Tokens Agent</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0B0B0D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+    padding: 20px;
+  }
+
+  .page-label {
+    color: #FFE500;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  /* Phone shell */
+  .phone-shell {
+    width: 340px;
+    height: 604px; /* ~9:16 */
+    background: #1a1a1a;
+    border-radius: 44px;
+    padding: 6px;
+    box-shadow:
+      0 0 0 1px #3a3a3a,
+      0 0 40px rgba(255, 229, 0, 0.12),
+      0 30px 80px rgba(0,0,0,0.8);
+    position: relative;
+  }
+
+  .phone-shell::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 6px;
+    background: #333;
+    border-radius: 3px;
+    z-index: 100;
+  }
+
+  /* Phone screen */
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 38px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+  }
+
+  /* ── MEDIA SEGMENTS ── */
+  .seg {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    overflow: hidden;
+  }
+  .seg.active { opacity: 1; }
+
+  /* Image segments - Ken Burns parent clips to screen */
+  .img-inner {
+    position: absolute;
+    inset: -8%;
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+    animation-play-state: paused;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes kb1 {
+    0%   { transform: scale(1.00) translate( 0%,  0%); }
+    100% { transform: scale(1.18) translate(-3%, -2%); }
+  }
+  @keyframes kb2 {
+    0%   { transform: scale(1.15) translate( 2%,  1%); }
+    100% { transform: scale(1.00) translate( 0%,  0%); }
+  }
+  @keyframes kb3 {
+    0%   { transform: scale(1.00) translate( 0%,  2%); }
+    100% { transform: scale(1.20) translate(-4%,  0%); }
+  }
+  @keyframes kb4 {
+    0%   { transform: scale(1.08) translate(-2%,  0%); }
+    100% { transform: scale(1.00) translate( 1%, -2%); }
+  }
+
+  /* Video segment */
+  .seg-video video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── OVERLAY LAYER ── */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  /* Top gradient fade */
+  .top-grad {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.72) 0%, transparent 100%);
+  }
+
+  /* Bottom gradient fade */
+  .bot-grad {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+  }
+
+  /* ── TOP BANNER ── */
+  .banner {
+    position: absolute;
+    top: 26px;
+    left: 14px; right: 14px;
+    z-index: 25;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
+  .banner.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .banner-inner {
+    display: inline-block;
+    background: linear-gradient(135deg, #FFE500 0%, #FFBA00 100%);
+    color: #0B0B0D;
+    font-size: 10.5px;
+    font-weight: 900;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 20px;
+    line-height: 1.4;
+    box-shadow: 0 2px 12px rgba(255,229,0,0.5);
+  }
+
+  /* ── SUBTITLE DISPLAY ── */
+  .subtitle-zone {
+    position: absolute;
+    bottom: 80px;
+    left: 12px; right: 12px;
+    z-index: 25;
+    text-align: center;
+    min-height: 90px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .subtitle-box {
+    line-height: 1.35;
+    padding: 4px 0 8px;
+  }
+
+  .w {
+    display: inline;
+    font-size: 21px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow:
+      2px  2px 6px rgba(0,0,0,0.9),
+      -1px -1px 4px rgba(0,0,0,0.9),
+       0px  0px 12px rgba(0,0,0,0.6);
+    margin-right: 4px;
+    transition: color 0.15s ease, opacity 0.2s ease;
+  }
+  .w.hi   { color: #FFE500; }
+  .w.dim  { opacity: 0.45; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #FFE500, #FFBA00);
+    width: 0%;
+    z-index: 30;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 8px rgba(255,229,0,0.8);
+  }
+
+  /* ── ACCOUNT / HASHTAG BAR ── */
+  .account-bar {
+    position: absolute;
+    bottom: 14px; left: 14px; right: 14px;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+  }
+  .avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFE500, #FF6B35);
+    border: 2px solid white;
+    flex-shrink: 0;
+  }
+  .acct-name {
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+  }
+  .hashtags {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.75);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+    margin-left: auto;
+  }
+
+  /* ── PLAY OVERLAY ── */
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: opacity 0.35s ease;
+    border-radius: 38px;
+  }
+  .play-overlay.gone {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .play-circle {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: rgba(255,229,0,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 0 30px rgba(255,229,0,0.5);
+    transition: transform 0.1s ease;
+  }
+  .play-overlay:hover .play-circle { transform: scale(1.08); }
+  .play-label {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  /* ── TIMELINE SCRUBBER (below phone) ── */
+  .timeline-ui {
+    margin-top: 18px;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tl-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .tl-bar-fill {
+    height: 100%;
+    background: #FFE500;
+    width: 0%;
+    border-radius: 2px;
+    transition: width 0.1s linear;
+  }
+  .tl-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.5px;
+  }
+  .seg-labels {
+    display: flex;
+    justify-content: space-between;
+  }
+  .seg-pip {
+    font-size: 8.5px;
+    color: rgba(255,229,0,0.5);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── STEP 4 NOTICE ── */
+  .render-notice {
+    margin-top: 14px;
+    width: 340px;
+    background: rgba(255,229,0,0.07);
+    border: 1px solid rgba(255,229,0,0.2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    text-align: center;
+  }
+  .render-notice strong { color: #FFE500; font-weight: 900; }
+</style>
+</head>
+<body>
+
+<p class="page-label">Interactive Video Preview &nbsp;·&nbsp; 2026-05-23</p>
+
+<div class="phone-shell">
+  <div class="phone-screen" id="screen">
+
+    <!-- ── SEGMENT 1: Intro/Hook — Bugis MRT Waiting (image) ── -->
+    <div class="seg seg-img active" id="seg1">
+      <div class="img-inner" id="seg1img"
+           style="background-image:url('../media/Bugis-mrt-waiting-1.jpeg')"></div>
+    </div>
+
+    <!-- ── SEGMENT 2: Core Tech — Bugis MRT Door (video) ── -->
+    <div class="seg seg-video" id="seg2">
+      <video id="seg2vid" muted playsinline preload="metadata">
+        <source src="../media/Bugis-mrt-door-2.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- ── SEGMENT 3: Limitation — Inside SMRT Train (image) ── -->
+    <div class="seg seg-img" id="seg3">
+      <div class="img-inner" id="seg3img"
+           style="background-image:url('../media/inside-smrt-train-3.jpg')"></div>
+    </div>
+
+    <!-- ── SEGMENT 4: Outro/Joke — Dover MRT Platform (image) ── -->
+    <div class="seg seg-img" id="seg4">
+      <div class="img-inner" id="seg4img"
+           style="background-image:url('../media/EW22_Dover_MRT_Station_platform-4.jpg')"></div>
+    </div>
+
+    <!-- ── OVERLAY UI ── -->
+    <div class="overlay">
+      <div class="top-grad"></div>
+      <div class="bot-grad"></div>
+    </div>
+
+    <!-- Top banner (first 3 s) -->
+    <div class="banner" id="banner">
+      <div class="banner-inner">1-Hour MRT Commute ➡️ 60s AI News</div>
+    </div>
+
+    <!-- Subtitles -->
+    <div class="subtitle-zone" id="subtitleZone">
+      <div class="subtitle-box" id="subtitleBox"></div>
+    </div>
+
+    <!-- Account bar -->
+    <div class="account-bar">
+      <div class="avatar"></div>
+      <span class="acct-name">@mrtcoder</span>
+      <span class="hashtags">#AI&nbsp;#Singapore&nbsp;#MRT&nbsp;#AgentAI</span>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Play overlay -->
+    <div class="play-overlay" id="playOverlay">
+      <div class="play-circle" id="playIcon">▶</div>
+      <span class="play-label">Tap to Preview</span>
+    </div>
+
+    <!-- Hidden automation trigger (programmatic play) -->
+    <button id="automation-trigger"
+            style="position:absolute;opacity:0;pointer-events:none;z-index:-999;width:1px;height:1px;">
+      trigger
+    </button>
+
+  </div><!-- /phone-screen -->
+</div><!-- /phone-shell -->
+
+<!-- Timeline UI below phone -->
+<div class="timeline-ui">
+  <div class="seg-labels">
+    <span class="seg-pip">① HOOK&nbsp;0s</span>
+    <span class="seg-pip">② TECH&nbsp;15s</span>
+    <span class="seg-pip">③ CATCH&nbsp;30s</span>
+    <span class="seg-pip">④ OUTRO&nbsp;45s</span>
+  </div>
+  <div class="tl-bar-wrap" id="tlWrap">
+    <div class="tl-bar-fill" id="tlFill"></div>
+  </div>
+  <div class="tl-labels">
+    <span>0s</span><span>15s</span><span>30s</span><span>45s</span><span>60s</span>
+  </div>
+</div>
+
+<div class="render-notice">
+  <strong>Step 4 — MP4 Render:</strong> Headless Puppeteer + FFmpeg video capture requires a
+  server-side rendering node. This interactive HTML is your production-ready sandbox preview.
+  Screen-record it on your device to export as MP4, or use a browser capture tool (e.g. Loom, OBS).
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  CONFIGURATION
+// ─────────────────────────────────────────────
+const TOTAL = 60; // seconds
+
+const SEGMENTS = [
+  { id:'seg1', type:'image', imgId:'seg1img', start:0,  end:15, kb:'kb1' },
+  { id:'seg2', type:'video', vidId:'seg2vid', start:15, end:30, kb:null  },
+  { id:'seg3', type:'image', imgId:'seg3img', start:30, end:45, kb:'kb2' },
+  { id:'seg4', type:'image', imgId:'seg4img', start:45, end:60, kb:'kb3' },
+];
+
+// Word timeline: [text, t_start_seconds]
+// -1 = punctuation gap / skip render
+const WORDS = [
+  // ── SEGMENT 1: Hook (0-15s) ──
+  ["Okay,",       0.00], ["so",          0.38], ["imagine",     0.68],
+  ["you're",      1.08], ["doing",       1.42], ["a",           1.72],
+  ["surprise",    1.92], ["quiz",        2.42], ["in",          2.78],
+  ["class",       3.05], ["right?",      3.40],
+  ["Some",        4.10], ["answers",     4.52], ["you",         4.95],
+  ["write",       5.25], ["down",        5.55], ["instantly",   5.85],
+  ["—",          -1.00],
+  ["no",          6.65], ["cap.",        6.95],
+  ["For",         7.70], ["the",         7.98], ["hard",        8.22],
+  ["ones,",       8.52], ["you",         8.88], ["close",       9.12],
+  ["your",        9.45], ["eyes",        9.72], ["and",        10.02],
+  ["mentally",   10.32], ["play",       10.85], ["it",         11.15],
+  ["out.",       11.45],
+  ["That's",     12.10], ["exactly",    12.52], ["what",       12.92],
+  ["this",       13.22], ["new",        13.52], ["AI",         13.82],
+  ["framework",  14.12], ["does.",      14.62],
+
+  // ── SEGMENT 2: Core Tech (15-30s) ──
+  ["SR²AM,",     15.12], ["built",      15.98], ["by",         16.32],
+  ["CMU",        16.58], ["researchers,",16.92],
+  ["splits",     17.55], ["AI",         17.92], ["thinking",   18.22],
+  ["into",       18.78], ["three",      19.08], ["modes:",     19.38],
+  ["act",        20.02], ["fast",       20.32], ["when",       20.62],
+  ["easy,",      20.92],
+  ["simulate",   21.55], ["the",        22.02], ["future",     22.22],
+  ["when",       22.78], ["hard,",      23.08],
+  ["and",        23.58], ["a",          23.78], ["smart",      23.98],
+  ["gatekeeper", 24.32], ["decides",    24.98], ["which",      25.52],
+  ["one.",       25.82],
+  ["Can",        26.48], ["or",         26.78], ["not",        26.98],
+  ["just",       27.28], ["answer",     27.58], ["directly?",  27.98],
+  ["That's",     28.68], ["what",       29.08], ["it",         29.38],
+  ["asks.",      29.65],
+
+  // ── SEGMENT 3: Limitation (30-45s) ──
+  ["But",        30.12], ["here's",     30.52], ["the",        30.82],
+  ["catch",      31.12], ["lah.",       31.52],
+  ["The",        32.12], ["longer",     32.48], ["the",        32.88],
+  ["planning",   33.18], ["horizon,",   33.68],
+  ["the",        34.18], ["more",       34.48], ["the",        34.78],
+  ["AI's",       34.98], ["predictions",35.38],
+  ["start",      35.98], ["drifting.",  36.38],
+  ["In",         37.18], ["simple",     37.52], ["tasks",      37.92],
+  ["—",          -1.00],
+  ["incredible.", 38.38],
+  ["In",         39.12], ["open-ended", 39.48], ["wild",       40.08],
+  ["environments?",40.48],
+  ["The",        41.18], ["world",      41.52], ["model",      41.88],
+  ["hallucinates,",42.28],
+  ["and",        43.08], ["all",        43.38], ["those",      43.68],
+  ["token",      43.98], ["savings",    44.28], ["evaporate.", 44.65],
+
+  // ── SEGMENT 4: Outro (45-60s) ──
+  ["A",          45.12], ["30B",        45.48], ["model",      45.88],
+  ["just",       46.28], ["matched",    46.62],
+  ["trillion-parameter", 47.08],
+  ["systems",    47.98], ["using",      48.38], ["95%",        48.78],
+  ["fewer",      49.18], ["thinking",   49.52], ["tokens",     49.92],
+  ["—",          -1.00],
+  ["no",         50.58], ["cap.",       50.88],
+  ["Turns",      51.58], ["out",        51.92], ["the",        52.18],
+  ["smartest",   52.48], ["move",       52.98], ["in",         53.32],
+  ["AI",         53.58], ["is",         53.88], ["knowing",    54.18],
+  ["when",       54.72], ["to",         54.98], ["stop",       55.22],
+  ["thinking.",  55.52],
+  ["Your",       56.38], ["scrum",      56.78], ["master",     57.12],
+  ["wishes",     57.52], ["you'd",      57.92], ["do",         58.22],
+  ["the",        58.48], ["same",       58.72], ["lah.",       59.02],
+  ["Follow",     59.62], ["for",        59.88], ["more!",      60.12],
+];
+
+// Filter renderable words
+const RWORDS = WORDS.filter(([_, t]) => t >= 0);
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+let tStart     = null;
+let rafId      = null;
+let playing    = false;
+let lastSegIdx = -1;
+
+// ─────────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────────
+function elapsed() {
+  return tStart ? (performance.now() - tStart) / 1000 : 0;
+}
+
+function segIdxAt(t) {
+  for (let i = 0; i < SEGMENTS.length; i++) {
+    if (t >= SEGMENTS[i].start && t < SEGMENTS[i].end) return i;
+  }
+  return SEGMENTS.length - 1;
+}
+
+function wordIdxAt(t) {
+  let idx = -1;
+  for (let i = 0; i < RWORDS.length; i++) {
+    if (RWORDS[i][1] <= t) idx = i;
+    else break;
+  }
+  return idx;
+}
+
+// ─────────────────────────────────────────────
+//  SEGMENT SWITCHER
+// ─────────────────────────────────────────────
+function applySegment(idx) {
+  if (idx === lastSegIdx) return;
+
+  SEGMENTS.forEach((s, i) => {
+    const el = document.getElementById(s.id);
+    const isNow = (i === idx);
+
+    if (isNow) {
+      el.classList.add('active');
+      if (s.type === 'image') {
+        const inner = document.getElementById(s.imgId);
+        // reset animation
+        inner.style.animation = 'none';
+        void inner.offsetHeight; // force reflow
+        inner.style.animation = `${s.kb} ${s.end - s.start}s linear forwards`;
+        inner.style.animationPlayState = 'running';
+      } else if (s.type === 'video') {
+        const vid = document.getElementById(s.vidId);
+        vid.currentTime = 0;
+        vid.play().catch(() => {});
+      }
+    } else {
+      el.classList.remove('active');
+      if (s.type === 'video') {
+        const vid = document.getElementById(s.vidId);
+        vid.pause();
+        vid.currentTime = 0;
+      }
+    }
+  });
+
+  lastSegIdx = idx;
+}
+
+// ─────────────────────────────────────────────
+//  SUBTITLE RENDERER  (sliding window of 5 words)
+// ─────────────────────────────────────────────
+const WINDOW = 5;
+let lastWordIdx = -2;
+
+function applySubtitles(wi) {
+  if (wi === lastWordIdx) return;
+  lastWordIdx = wi;
+
+  const box = document.getElementById('subtitleBox');
+  if (wi < 0) { box.innerHTML = ''; return; }
+
+  const from = Math.max(0, wi - WINDOW + 1);
+  let html = '';
+  for (let i = from; i <= wi; i++) {
+    const isHi  = (i === wi);
+    const isDim = (i < wi - 2);
+    const cls   = isHi ? 'w hi' : isDim ? 'w dim' : 'w';
+    html += `<span class="${cls}">${RWORDS[i][0]}</span>`;
+    if (i < wi) html += ' ';
+  }
+  box.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+//  BANNER
+// ─────────────────────────────────────────────
+function applyBanner(t) {
+  const banner = document.getElementById('banner');
+  if (t < 3) banner.classList.add('show');
+  else        banner.classList.remove('show');
+}
+
+// ─────────────────────────────────────────────
+//  PROGRESS
+// ─────────────────────────────────────────────
+function applyProgress(t) {
+  const pct = Math.min(100, (t / TOTAL) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('tlFill').style.width = pct + '%';
+}
+
+// ─────────────────────────────────────────────
+//  MAIN TICK
+// ─────────────────────────────────────────────
+function tick() {
+  if (!playing) return;
+  const t = elapsed();
+
+  if (t >= TOTAL + 0.5) {
+    playing = false;
+    applyProgress(TOTAL);
+    // Show replay
+    const po = document.getElementById('playOverlay');
+    document.getElementById('playIcon').textContent = '↺';
+    po.querySelector('.play-label').textContent = 'Watch Again';
+    po.classList.remove('gone');
+    return;
+  }
+
+  applySegment(segIdxAt(t));
+  applySubtitles(wordIdxAt(t));
+  applyBanner(t);
+  applyProgress(t);
+
+  rafId = requestAnimationFrame(tick);
+}
+
+// ─────────────────────────────────────────────
+//  START PLAYBACK
+// ─────────────────────────────────────────────
+function startPlayback() {
+  if (playing) return;
+
+  // Reset segments & animations
+  SEGMENTS.forEach(s => {
+    document.getElementById(s.id).classList.remove('active');
+    if (s.type === 'image') {
+      const inner = document.getElementById(s.imgId);
+      inner.style.animation = 'none';
+      void inner.offsetHeight;
+    }
+  });
+
+  // Reset UI
+  document.getElementById('banner').classList.remove('show');
+  document.getElementById('subtitleBox').innerHTML = '';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('tlFill').style.width = '0%';
+  document.getElementById('playOverlay').classList.add('gone');
+
+  playing    = true;
+  lastSegIdx = -1;
+  lastWordIdx = -2;
+  tStart     = performance.now();
+
+  rafId = requestAnimationFrame(tick);
+}
+
+// ─────────────────────────────────────────────
+//  EVENT BINDINGS
+// ─────────────────────────────────────────────
+document.getElementById('playOverlay').addEventListener('click', startPlayback);
+document.getElementById('automation-trigger').addEventListener('click', startPlayback);
+
+// Timeline scrub (click to jump — read-only preview mode)
+document.getElementById('tlWrap').addEventListener('click', function(e) {
+  if (!playing && tStart === null) return;
+  const rect = this.getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  tStart = performance.now() - ratio * TOTAL * 1000;
+});
+
+// ─────────────────────────────────────────────
+//  BOOT — show banner briefly on load
+// ─────────────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('banner').classList.add('show');
+    setTimeout(() => document.getElementById('banner').classList.remove('show'), 2800);
+  }, 400);
+});
+</script>
+</body>
+</html>
