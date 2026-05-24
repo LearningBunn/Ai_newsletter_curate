@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>60s AI News — SR²AM Efficient Reasoning | MRT Commute Series</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0B0B0D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow: hidden;
+    }
+
+    .outer-canvas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      background: #0B0B0D;
+    }
+
+    /* Strict 9:16 phone container — scales to fit any viewport */
+    .phone-frame {
+      position: relative;
+      width: min(calc(100vh * 9 / 16), 90vw, 432px);
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      border-radius: 28px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 0 50px rgba(255,230,0,0.12),
+        0 30px 80px rgba(0,0,0,0.85);
+    }
+
+    /* ── Background layer ─────────────────────────────── */
+    .bg-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      z-index: 1;
+      transition: opacity 0.6s ease;
+    }
+    /* CSS gradient fallbacks per segment */
+    .bg-seg-1 { background-color: #0d1520; background-image: linear-gradient(160deg,#0d1520 0%,#0a1f3a 55%,#081630 100%); }
+    .bg-seg-2 { background-color: #110d1f; background-image: linear-gradient(160deg,#110d1f 0%,#1a0d30 55%,#0e1528 100%); }
+    .bg-seg-3 { background-color: #1a0d00; background-image: linear-gradient(160deg,#1a0d00 0%,#1f1800 55%,#0e1a10 100%); }
+    .bg-seg-4 { background-color: #0b1017; background-image: linear-gradient(160deg,#0b1017 0%,#121b26 55%,#0b1520 100%); }
+
+    /* ── Dark overlay — CRITICAL readability masking ─── */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 11, 13, 0.70);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    /* ── Film grain texture ───────────────────────────── */
+    .grain {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    /* ── Scan-line CRT effect ─────────────────────────── */
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      );
+    }
+
+    /* ── Content stack ───────────────────────────────── */
+    .content {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top header banner ───────────────────────────── */
+    .header-banner {
+      flex-shrink: 0;
+      background: linear-gradient(90deg, rgba(255,230,0,0.13) 0%, rgba(255,230,0,0.04) 100%);
+      border-bottom: 1px solid rgba(255,230,0,0.25);
+      padding: 10px 16px 9px;
+      text-align: center;
+    }
+    .header-banner-text {
+      font-size: clamp(10px, 2.4vw, 13px);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #FFE600;
+      text-transform: uppercase;
+    }
+
+    /* ── Segment indicator row ───────────────────────── */
+    .seg-indicator {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 0 3px;
+    }
+    .dot {
+      height: 5px;
+      width: 5px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.2);
+      transition: width 0.35s ease, background 0.35s ease;
+    }
+    .dot.active {
+      width: 22px;
+      background: #FFE600;
+    }
+    .dot.done {
+      background: rgba(255,230,0,0.4);
+    }
+
+    /* ── Segment label ───────────────────────────────── */
+    .seg-label {
+      flex-shrink: 0;
+      text-align: center;
+      font-size: clamp(8px, 1.8vw, 10px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      padding: 2px 0 0;
+    }
+
+    /* ── Vertical spacer ─────────────────────────────── */
+    .spacer { flex: 1; }
+
+    /* ── Topic badge (middle) ────────────────────────── */
+    .topic-badge-wrap {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 0 20px 12px;
+    }
+    .topic-badge {
+      display: inline-block;
+      background: rgba(255,230,0,0.10);
+      border: 1px solid rgba(255,230,0,0.28);
+      border-radius: 20px;
+      padding: 5px 15px;
+      font-size: clamp(9px, 1.9vw, 11px);
+      font-weight: 700;
+      color: #FFE600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    /* ── Kinetic subtitle lower-third ────────────────── */
+    .subtitle-area {
+      flex-shrink: 0;
+      padding: 0 14px 12px;
+      min-height: 28%;
+      display: flex;
+      align-items: flex-end;
+    }
+    .subtitle-words {
+      width: 100%;
+      font-size: clamp(17px, 4.6vw, 26px);
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+    .word {
+      display: inline;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+      transition: color 0.06s ease;
+    }
+    .word.active {
+      color: #FFE600;
+      text-shadow: 0 0 24px rgba(255,230,0,0.55), 0 2px 12px rgba(0,0,0,0.9);
+    }
+    .word::after { content: ' '; }
+
+    /* ── Progress bar ────────────────────────────────── */
+    .progress-wrap {
+      flex-shrink: 0;
+      padding: 6px 16px 14px;
+    }
+    .progress-track {
+      height: 3px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #FFE600, #FFB300);
+      border-radius: 2px;
+      transition: width 0.25s linear;
+    }
+    .progress-time {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      font-size: clamp(9px, 1.8vw, 10px);
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── START PREVIEW overlay ───────────────────────── */
+    .start-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: rgba(11, 11, 13, 0.88);
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      backdrop-filter: blur(4px);
+    }
+    .start-overlay.hidden { display: none; }
+
+    .so-eyebrow {
+      font-size: clamp(9px, 2vw, 11px);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: #FFE600;
+      opacity: 0.75;
+      text-transform: uppercase;
+    }
+    .so-title {
+      font-size: clamp(18px, 4.5vw, 24px);
+      font-weight: 900;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.2;
+      padding: 0 28px;
+    }
+    .so-subtitle {
+      font-size: clamp(10px, 2.2vw, 13px);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 0 32px;
+      line-height: 1.55;
+    }
+    .so-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 20px;
+    }
+    .so-pill {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: clamp(8px, 1.8vw, 10px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.06em;
+    }
+    .start-btn {
+      background: linear-gradient(135deg, #FFE600 0%, #FFB300 100%);
+      color: #0B0B0D;
+      border: none;
+      border-radius: 50px;
+      padding: clamp(13px, 2.8vw, 17px) clamp(32px, 7vw, 44px);
+      font-size: clamp(14px, 3.2vw, 18px);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      font-family: 'Inter', system-ui, sans-serif;
+      box-shadow: 0 0 36px rgba(255,230,0,0.38), 0 6px 20px rgba(0,0,0,0.4);
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+      margin-top: 4px;
+    }
+    .start-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 48px rgba(255,230,0,0.55), 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .start-btn:active { transform: scale(0.97); }
+
+    .so-footnote {
+      font-size: clamp(8px, 1.7vw, 10px);
+      color: rgba(255,255,255,0.2);
+      text-align: center;
+    }
+
+    /* Hidden automation hook for headless capture */
+    #automation-trigger { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="outer-canvas">
+  <div class="phone-frame" id="phone">
+
+    <!-- Layer 1: Background -->
+    <div class="bg-layer bg-seg-1" id="bgLayer"></div>
+
+    <!-- Layer 2: Dark overlay mask -->
+    <div class="overlay"></div>
+
+    <!-- Layer 3: Grain -->
+    <div class="grain"></div>
+
+    <!-- Layer 4: Scanlines -->
+    <div class="scanlines"></div>
+
+    <!-- Layer 5: UI Content -->
+    <div class="content">
+
+      <div class="header-banner">
+        <div class="header-banner-text">1-Hour MRT Commute ➡️ 60s AI News</div>
+      </div>
+
+      <div class="seg-indicator">
+        <div class="dot active" id="dot-0"></div>
+        <div class="dot" id="dot-1"></div>
+        <div class="dot" id="dot-2"></div>
+        <div class="dot" id="dot-3"></div>
+      </div>
+      <div class="seg-label" id="segLabel">THE HOOK</div>
+
+      <div class="spacer"></div>
+
+      <div class="topic-badge-wrap">
+        <div class="topic-badge" id="topicBadge">🧠 SR²AM · Efficient Reasoning</div>
+      </div>
+
+      <div class="subtitle-area">
+        <div class="subtitle-words" id="subtitleWords"></div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-time">
+          <span id="timeElapsed">0:00</span>
+          <span>1:00</span>
+        </div>
+      </div>
+
+    </div><!-- .content -->
+
+    <!-- START PREVIEW overlay -->
+    <div class="start-overlay" id="startOverlay">
+      <div class="so-eyebrow">MRT AI Shorts · 24 May 2026</div>
+      <div class="so-title">The 30B Model That<br>Crushed a 1-Trillion Titan</div>
+      <div class="so-subtitle">
+        Browser security blocks auto-play voice.<br>
+        Tap START to unlock narration &amp; begin your<br>
+        60-second commute briefing.
+      </div>
+      <div class="so-meta">
+        <div class="so-pill">🎙️ Malaysian EN Voice</div>
+        <div class="so-pill">⏱️ 60 seconds</div>
+        <div class="so-pill">🚇 4 Segments</div>
+      </div>
+      <button class="start-btn" id="startBtn">🔴 START PREVIEW</button>
+      <div class="so-footnote">Powered by Web Speech API · SR²AM Research · CMU &amp; MBZUAI</div>
+    </div>
+
+    <!-- Hidden automation trigger for headless capture pipeline -->
+    <button id="automation-trigger" aria-hidden="true"></button>
+
+  </div><!-- .phone-frame -->
+</div><!-- .outer-canvas -->
+
+<script>
+(function () {
+  'use strict';
+
+  // ─── SCRIPT DATA ─────────────────────────────────────────────────
+  // 4 segments mapped to MRT fallback visuals
+  // Voice persona: 28-year-old Malaysian girl on Singapore MRT
+  // Total target: ~60 seconds at rate 1.05
+  const SEGMENTS = [
+    {
+      idx: 0,
+      label: 'THE HOOK',
+      badge: '🪝 The Hook',
+      bgClass: 'bg-seg-1',
+      bgImg: '../media/mrt-gate.jpg',
+      text: 'Okay wait, so a 30-billion parameter AI just beat a model 33 times its size? No caps. And the crazy part — it used 95% fewer tokens doing it lah. It basically learned when NOT to think.'
+    },
+    {
+      idx: 1,
+      label: 'CORE TECH',
+      badge: '🧠 Core Tech',
+      bgClass: 'bg-seg-2',
+      bgImg: '../media/mrt-window.jpg',
+      text: 'Imagine a video game boss fight right. The noob mashes every button every single frame, burning all their stamina. But the smart player watches the boss pattern, picks the exact right moment, then strikes ONCE. SR2AM is that smart player — its self-regulation controller basically asks, can or not skip the thinking this time. When the answer is no, it just reacts fast. Same boss. 95% less stamina lah.'
+    },
+    {
+      idx: 2,
+      label: 'THE CATCH',
+      badge: '⚠️ The Catch',
+      bgClass: 'bg-seg-3',
+      bgImg: '../media/mrt-carriage.jpg',
+      text: 'The catch though? It builds a world model to simulate future moves before acting. If that world model gets one thing wrong, the whole plan goes south. One bad simulation and your efficient genius AI starts making a whole chain of terrible decisions.'
+    },
+    {
+      idx: 3,
+      label: 'DROP THE MIC',
+      badge: '🎤 Drop the Mic',
+      bgClass: 'bg-seg-4',
+      bgImg: '../media/mrt-platform.jpg',
+      text: 'But honestly — your senior engineer spends 3 hours planning the same feature a junior ships in 20 minutes. Fewer tokens wins every time lah. So would you rather be the trillion-parameter AI grinding every single token... or the 30B model that already shipped? Drop your answer below.'
+    }
+  ];
+
+  // Approximate segment start times in seconds (sum of prior segment speech durations)
+  // Calibrated for rate=1.05 natural speech pace
+  const SEG_START_TIMES = [0, 13, 33, 46];
+  const TOTAL_DURATION  = 60;
+
+  // ─── DOM REFS ─────────────────────────────────────────────────────
+  const $bgLayer      = document.getElementById('bgLayer');
+  const $segLabel     = document.getElementById('segLabel');
+  const $topicBadge   = document.getElementById('topicBadge');
+  const $subtitle     = document.getElementById('subtitleWords');
+  const $progressFill = document.getElementById('progressFill');
+  const $timeElapsed  = document.getElementById('timeElapsed');
+  const $startOverlay = document.getElementById('startOverlay');
+  const $startBtn     = document.getElementById('startBtn');
+  const $autoTrigger  = document.getElementById('automation-trigger');
+
+  // ─── STATE ────────────────────────────────────────────────────────
+  let currentSegIdx = 0;
+  let isPlaying     = false;
+  let startTime     = null;
+  let rafId         = null;
+
+  // ─── HELPERS ──────────────────────────────────────────────────────
+  function fmt(s) {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + String(sec).padStart(2, '0');
+  }
+
+  function setSegment(idx) {
+    if (idx === currentSegIdx && isPlaying) return; // avoid flicker on same segment
+    currentSegIdx = idx;
+    const seg = SEGMENTS[idx];
+
+    // Background — try image, fall back to CSS gradient class
+    $bgLayer.className = 'bg-layer ' + seg.bgClass;
+    $bgLayer.style.backgroundImage = '';
+    const img = new Image();
+    img.onload = function () {
+      $bgLayer.style.backgroundImage = "url('" + seg.bgImg + "')";
+    };
+    img.src = seg.bgImg;
+
+    $segLabel.textContent    = seg.label;
+    $topicBadge.textContent  = seg.badge;
+
+    // Dot states
+    for (let i = 0; i < 4; i++) {
+      const d = document.getElementById('dot-' + i);
+      d.className = 'dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+    }
+
+    renderWords(seg.text, -1);
+  }
+
+  function renderWords(text, activeWordIdx) {
+    const words = text.split(/\s+/);
+    $subtitle.innerHTML = '';
+    words.forEach(function (w, i) {
+      const span = document.createElement('span');
+      span.className = 'word' + (i === activeWordIdx ? ' active' : '');
+      span.id = 'w' + i;
+      span.textContent = w;
+      $subtitle.appendChild(span);
+    });
+  }
+
+  function activateWordAt(charIndex) {
+    const seg = SEGMENTS[currentSegIdx];
+    const words = seg.text.split(/\s+/);
+    let pos = 0;
+    let targetIdx = -1;
+
+    for (let i = 0; i < words.length; i++) {
+      const wStart = seg.text.indexOf(words[i], pos);
+      const wEnd   = wStart + words[i].length;
+      if (charIndex >= wStart && charIndex <= wEnd) {
+        targetIdx = i;
+        break;
+      }
+      pos = wEnd;
+    }
+
+    words.forEach(function (_, i) {
+      const el = document.getElementById('w' + i);
+      if (!el) return;
+      if (i === targetIdx) el.classList.add('active');
+      else el.classList.remove('active');
+    });
+  }
+
+  // ─── PROGRESS ANIMATION LOOP ──────────────────────────────────────
+  function tick() {
+    if (!isPlaying || !startTime) return;
+    const elapsed = Math.min((Date.now() - startTime) / 1000, TOTAL_DURATION);
+
+    $progressFill.style.width = (elapsed / TOTAL_DURATION * 100) + '%';
+    $timeElapsed.textContent  = fmt(elapsed);
+
+    // Segment switching by time
+    let newIdx = 0;
+    for (let i = SEG_START_TIMES.length - 1; i >= 0; i--) {
+      if (elapsed >= SEG_START_TIMES[i]) { newIdx = i; break; }
+    }
+    if (newIdx !== currentSegIdx) setSegment(newIdx);
+
+    if (elapsed < TOTAL_DURATION) {
+      rafId = requestAnimationFrame(tick);
+    } else {
+      isPlaying = false;
+      $progressFill.style.width = '100%';
+      $timeElapsed.textContent  = '1:00';
+    }
+  }
+
+  // ─── SPEECH ENGINE ────────────────────────────────────────────────
+  function speakSegment(idx) {
+    if (idx >= SEGMENTS.length) { isPlaying = false; return; }
+
+    const seg  = SEGMENTS[idx];
+    const utt  = new SpeechSynthesisUtterance(seg.text);
+    utt.rate   = 1.05;
+    utt.pitch  = 1.08;
+    utt.lang   = 'en-GB';
+
+    // Female voice selection — prefer British/Australian female for closest MYSian cadence
+    const voices = speechSynthesis.getVoices();
+    const preferred = (
+      voices.find(function(v) { return v.name === 'Google UK English Female'; }) ||
+      voices.find(function(v) { return /samantha|karen|moira|victoria|zira/i.test(v.name); }) ||
+      voices.find(function(v) { return v.lang.startsWith('en') && /female|woman/i.test(v.name); }) ||
+      voices.find(function(v) { return v.lang.startsWith('en-AU') || v.lang.startsWith('en-GB'); }) ||
+      voices.find(function(v) { return v.lang.startsWith('en'); })
+    );
+    if (preferred) utt.voice = preferred;
+
+    utt.onboundary = function (e) {
+      if (e.name === 'word') activateWordAt(e.charIndex);
+    };
+
+    utt.onend   = function () { speakSegment(idx + 1); };
+    utt.onerror = function () { speakSegment(idx + 1); };
+
+    speechSynthesis.speak(utt);
+  }
+
+  // ─── START HANDLER ────────────────────────────────────────────────
+  function startPreview() {
+    $startOverlay.classList.add('hidden');
+    isPlaying  = true;
+    startTime  = Date.now();
+    setSegment(0);
+
+    // Voices may not be loaded synchronously
+    const voices = speechSynthesis.getVoices();
+    if (voices.length === 0) {
+      speechSynthesis.onvoiceschanged = function () { speakSegment(0); };
+    } else {
+      speakSegment(0);
+    }
+
+    rafId = requestAnimationFrame(tick);
+  }
+
+  $startBtn.addEventListener('click', startPreview);
+  $autoTrigger.addEventListener('click', startPreview);
+
+  // Init first segment display on load
+  setSegment(0);
+
+}());
+</script>
+
+</body>
+</html>
