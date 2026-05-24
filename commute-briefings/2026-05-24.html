@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commute Briefing — May 24, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0B0B0D;
+    --text: #EDEAE2;
+    --accent: #E8823A;
+    --muted: #7A7770;
+    --divider: #1E1E22;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.65;
+    padding: 0 0 120px;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    text-align: center;
+    padding: 80px 24px 60px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .masthead__eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .masthead__title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(56px, 10vw, 96px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .masthead__date {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .masthead__tagline {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── STORY LIST ── */
+  .stories {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .story {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0 32px;
+    padding: 64px 0;
+    border-bottom: 1px solid var(--divider);
+    align-items: start;
+  }
+
+  @media (max-width: 640px) {
+    .story {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .story__rank-wrap {
+      margin-bottom: -20px;
+    }
+  }
+
+  .story__rank-wrap {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .story__rank {
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 900;
+    line-height: 0.85;
+    color: var(--divider);
+    -webkit-text-stroke: 1px #2A2A30;
+    user-select: none;
+    letter-spacing: -0.04em;
+    transition: color 0.2s;
+  }
+
+  .story:hover .story__rank {
+    color: #1A1A20;
+    -webkit-text-stroke-color: var(--accent);
+  }
+
+  .story__body {
+    padding-top: 4px;
+  }
+
+  .story__tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(232, 130, 58, 0.1);
+    border: 1px solid rgba(232, 130, 58, 0.25);
+    border-radius: 3px;
+    padding: 3px 9px;
+    margin-bottom: 14px;
+  }
+
+  .story__headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .story__summary {
+    font-size: 15px;
+    color: #B8B4AC;
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+
+  .story__hook {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 16px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 60px 24px 20px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .footer strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <p class="masthead__eyebrow">Daily Intelligence</p>
+  <h1 class="masthead__title">COMMUTE<br>BRIEFING</h1>
+  <p class="masthead__date">Sunday, May 24, 2026</p>
+  <p class="masthead__tagline">10 high-signal AI stories &bull; curated for your commute</p>
+</header>
+
+<!-- STORIES -->
+<main class="stories">
+
+  <!-- 1 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">01</span></div>
+    <div class="story__body">
+      <span class="story__tag">Mind-Bending Efficiency</span>
+      <h2 class="story__headline">The 30B Model That Crushed a Trillion-Parameter Titan</h2>
+      <p class="story__summary">SR&sup2;AM (Self-Regulated Simulative Reasoning Agentic LLM) from CMU &amp; MBZUAI decomposes decision-making into three co-operating systems: a world-model-based simulative planner, a learned self-regulation controller, and a reactive executor. The 30B v1.0 variant achieves Pass@1 competitive with 120&ndash;355B and even 685B&ndash;1T parameter systems while consuming 25.8&ndash;95.3% fewer reasoning tokens. RL training increased average planning horizon by 22.8% while planning frequency grew only 2.0% — the model learned precisely when <em>not</em> to think.</p>
+      <p class="story__hook">A 30-billion-parameter AI just out-reasoned models 30&times; its size — and used 95% fewer tokens doing it. This is what efficiency actually looks like at the frontier.</p>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">02</span></div>
+    <div class="story__body">
+      <span class="story__tag">Hardware &amp; Chips</span>
+      <h2 class="story__headline">Google's AI Glasses Are Almost Ready to Steal the Show</h2>
+      <p class="story__summary">Google demoed prototype Android XR glasses at I/O 2026, overlaying Gemini-powered real-time translation, turn-by-turn navigation, and contextual information directly into the wearer's field of view. The glasses pair with a phone for connectivity, using on-device inference for latency-sensitive tasks and offloading heavier reasoning to cloud Gemini endpoints. TechCrunch reviewers concluded the experience is "almost there" — with latency and form factor remaining the final friction points before a consumer launch.</p>
+      <p class="story__hook">Google just put Gemini inside a pair of glasses that you can actually wear — live translation, navigation, and AI answers all floating in your eyeline. The sci-fi future arrived with a "coming soon" label.</p>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">03</span></div>
+    <div class="story__body">
+      <span class="story__tag">Open-Source Drop</span>
+      <h2 class="story__headline">The T2I Reward Model That Barely Needs Labels</h2>
+      <p class="story__summary">AutoRubric-T2I is the first rubric-learning framework for text-to-image generation, automatically synthesizing and selecting explicit evaluation criteria to guide Vision-Language Model judges. It achieves state-of-the-art results on MMRB2 and improves generation quality on TIIF and UniGenBench++ via the Flow-GRPO pipeline — while consuming less than 0.01% of the annotated preference data that comparable reward models require. The core insight is that explicit, interpretable rubrics dramatically outperform monolithic preference signals when training reward models.</p>
+      <p class="story__hook">A new text-to-image reward model trained on almost zero labeled data just beat every strong baseline. Teach the judge to grade with a rubric instead of gut feeling — and everything changes.</p>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">04</span></div>
+    <div class="story__body">
+      <span class="story__tag">Creative AI</span>
+      <h2 class="story__headline">The AI That Jams With You Live on a Gaming PC</h2>
+      <p class="story__summary">Live Music Diffusion Models (LMDMs) adapt audio diffusion models for interactive real-time music generation via block-wise KV Caching to recover and outperform discrete autoregressive inference speed. The novel ARC-Forcing (Alignment via Recurrent Conditioning) paradigm enables stable post-training alignment without explicit RL or reward models, allowing smooth real-time control of musical style and energy. The system supports text-conditioned generation, sketch-based synthesis, and live jamming with a natural "generative delay" effect — and runs on consumer gaming hardware.</p>
+      <p class="story__hook">A new AI music model runs on your gaming PC, listens to what you play, and jams back in real time. No cloud, no latency, no excuses — just pure human-AI improvisation in your bedroom.</p>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">05</span></div>
+    <div class="story__body">
+      <span class="story__tag">Ethics &amp; Forensics</span>
+      <h2 class="story__headline">AI Is Reading the Dead — and the NTSB Just Slammed the Door</h2>
+      <p class="story__summary">Researchers used AI image-reconstruction techniques on spectrogram images of cockpit voice recordings to reconstruct intelligible audio from pilots killed in crashes — bypassing the NTSB's strict access controls on raw audio files. The technique exploits a gap: spectrograms were less tightly controlled than audio, but an audio diffusion model can invert them back to waveforms. The NTSB has since restricted access to its spectrogram system, but the breakthrough exposes a fundamental tension between forensic transparency and the privacy rights of the deceased.</p>
+      <p class="story__hook">Investigators used AI to reconstruct a dead pilot's voice from a photo of a sound wave. The government locked down the photos. The genie is already out of the bottle — and we need to talk about it.</p>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">06</span></div>
+    <div class="story__body">
+      <span class="story__tag">AI Security</span>
+      <h2 class="story__headline">Samsung's Lock for AI Models — Zero Retraining Required</h2>
+      <p class="story__summary">LoREnc from Samsung Research proposes a training-free framework to protect foundation models and their LoRA adapters against IP theft and model-recovery attacks. It applies spectral truncation to suppress the dominant low-rank components of model weights, compensates the missing information only inside authorized adapters, and applies orthogonal reparameterization to obscure structural fingerprints. Unauthorized users receive structurally collapsed, unusable outputs, while authorized users recover exact original performance with under 1% computational overhead.</p>
+      <p class="story__hook">Samsung built a lock for AI models that doesn't require retraining — and unauthorized copies collapse into garbage output. This is what IP protection for the LLM era actually looks like.</p>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">07</span></div>
+    <div class="story__body">
+      <span class="story__tag">Industry Deals</span>
+      <h2 class="story__headline">Spotify Just Legalized AI Remixes — and Artists Get a Cut</h2>
+      <p class="story__summary">Spotify and Universal Music Group struck a landmark deal allowing Premium subscribers to create AI-generated song covers and remixes of UMG's catalog, with built-in revenue sharing flowing back to the original artists. The agreement closes the key royalty gap that has plagued every previous AI music tool and is the first major-label&ndash;streaming-platform deal to formally legalize fan-made AI music at scale. It sets a structural template the industry has been negotiating toward for three years.</p>
+      <p class="story__hook">Spotify just made AI remixes legal AND profitable for the original artists. The biggest music label on earth gave fans a license to create — with a royalty check baked in. The music industry just blinked.</p>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">08</span></div>
+    <div class="story__body">
+      <span class="story__tag">AI Benchmarks</span>
+      <h2 class="story__headline">AI Forecasts Its Own Future — and Gets It Confidently Wrong</h2>
+      <p class="story__summary">CUSP (Cutoff-conditioned Unseen Scientific Progress) is a 4,760-event benchmark across biology, chemistry, physics, and AI itself, testing whether frontier models can predict whether scientific advances will materialize and when. Results show that frontier models cannot reliably forecast scientific progress and exhibit systematic overconfidence across all domains — though AI-domain events are modestly more predictable than biology or chemistry. Access to prior scientific knowledge does not translate into reliable forecasting capability.</p>
+      <p class="story__hook">Researchers asked the world's most powerful AI models to predict the future of science — including their own field. They were confidently, systematically wrong. The oracle has a blind spot.</p>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">09</span></div>
+    <div class="story__body">
+      <span class="story__tag">Vision AI</span>
+      <h2 class="story__headline">One Photo. Any Animal. Full 3D Model — On Prompt.</h2>
+      <p class="story__summary">SAM 3D Animal is the first promptable framework for reconstructing multiple animals in 3D from a single in-the-wild photograph, built on the SMAL+ parametric animal model. It accepts flexible prompts — keypoints or segmentation masks — to disambiguate crowded and occluded multi-animal scenes, solving the multi-instance problem that previously required multi-view camera setups. The authors introduce Herd3D, a new dataset of 5,000+ multi-animal images, and achieve state-of-the-art on Animal3D, APTv2, and Animal Kingdom.</p>
+      <p class="story__hook">Snap one photo of a herd of animals and this AI builds a full 3D model of every individual — no special camera rig, no multi-view setup, just a single wild image and a prompt. Wildlife AI just grew up.</p>
+    </div>
+  </article>
+
+  <!-- 10 -->
+  <article class="story">
+    <div class="story__rank-wrap"><span class="story__rank">10</span></div>
+    <div class="story__body">
+      <span class="story__tag">Neuro-AI Bridge</span>
+      <h2 class="story__headline">AI Found the Same Geometry Inside Every Human Brain</h2>
+      <p class="story__summary">Researchers at the University of Barcelona applied self-supervised encoders to fMRI data from the Natural Scenes Dataset, learning subject-specific brain embeddings with zero cross-subject supervision. Using only unsupervised orthogonal rotations, the independently-learned spaces from different human subjects can be translated to a shared geometry — evidence that human visual cortex implements an approximately isometric universal structure. The result mirrors the "platonic representations" hypothesis that diverse AI models also converge to similar internal geometries, suggesting biological and artificial neural networks are converging on the same math.</p>
+      <p class="story__hook">An AI analyzed dozens of human brains independently and discovered they're all running the same internal geometry — no labels, no supervision, just pure unsupervised math. The line between neuroscience and AI just got a lot blurrier.</p>
+    </div>
+  </article>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p><strong>COMMUTE BRIEFING</strong> &bull; May 24, 2026 &bull; Curated by AI &bull; Sources: HuggingFace Daily Papers &bull; TechCrunch AI</p>
+</footer>
+
+</body>
+</html>
