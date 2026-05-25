@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commute Briefing — May 25, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,700;9..144,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0B0B0D;
+      --text:     #EDEAE2;
+      --accent:   #E8823A;
+      --muted:    #7A7671;
+      --rule:     #1E1D1B;
+      --card-bg:  #111013;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 0 0 120px;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      text-align: center;
+      padding: 80px 24px 60px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .masthead::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse at center, rgba(232,130,58,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .masthead-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .masthead-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(52px, 9vw, 96px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .masthead-title span {
+      display: block;
+      color: var(--accent);
+    }
+
+    .masthead-date {
+      margin-top: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .masthead-sub {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── FEED ── */
+    .feed {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── STORY CARD ── */
+    .story {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 0 32px;
+      padding: 64px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+      position: relative;
+    }
+
+    .story:last-child { border-bottom: none; }
+
+    .story-rank {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 120px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--rule);
+      text-align: right;
+      user-select: none;
+      padding-top: 6px;
+      letter-spacing: -0.04em;
+      transition: color 0.3s ease;
+    }
+
+    .story:hover .story-rank {
+      color: #252320;
+    }
+
+    .story-body { flex: 1; }
+
+    .story-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(232,130,58,0.35);
+      border-radius: 3px;
+      padding: 3px 9px;
+      margin-bottom: 14px;
+    }
+
+    .story-headline {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(22px, 3.2vw, 32px);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .story-summary {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: #B8B4AC;
+      margin-bottom: 22px;
+    }
+
+    .story-hook-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .story-hook {
+      font-size: 16px;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--text);
+      border-left: 3px solid var(--accent);
+      padding-left: 16px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 620px) {
+      .story {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .story-rank {
+        font-size: 72px;
+        text-align: left;
+        margin-bottom: 8px;
+      }
+      .masthead { padding: 56px 20px 44px; }
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 60px 24px 40px;
+      border-top: 1px solid var(--rule);
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+    .footer strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- ── MASTHEAD ── -->
+  <header class="masthead">
+    <p class="masthead-label">Daily Intelligence</p>
+    <h1 class="masthead-title">
+      COMMUTE<span>BRIEFING</span>
+    </h1>
+    <p class="masthead-date">Sunday, May 25, 2026</p>
+    <p class="masthead-sub">10 high-signal stories &middot; sourced from The Neuron, HuggingFace, TechCrunch AI &amp; beyond</p>
+  </header>
+
+  <!-- ── STORIES FEED ── -->
+  <main class="feed">
+
+    <!-- 1 -->
+    <article class="story">
+      <div class="story-rank">1</div>
+      <div class="story-body">
+        <span class="story-tag">AI Tools Boom</span>
+        <h2 class="story-headline">Cursor's $3B Coding Empire Is About to Become SpaceX Property for $60B</h2>
+        <p class="story-summary">
+          Cursor, the AI-powered coding IDE, crossed $3 billion in annualized recurring revenue this month — a milestone that took Salesforce over a decade, achieved in roughly two years. Its growth engine: 3,000+ enterprise customers each paying $100K+/year, and this week's Composer 2.5 model partially trained on SpaceX's Colossus supercomputer. SpaceX has secured the right to acquire Cursor outright for $60B, potentially closing within 30 days of SpaceX's June 12 IPO — giving Cursor proprietary compute independence from OpenAI and Anthropic APIs. The valuation arc is staggering: $2.5B eighteen months ago, $9B last May, $29.3B by November, and $60B as the final price tag.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          The coding tool that prints $1 billion in new ARR every two months is about to become SpaceX property. The age of proprietary AI compute moats just began — and the devs who build the AI are being bought by the people who own the rockets.
+        </p>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="story">
+      <div class="story-rank">2</div>
+      <div class="story-body">
+        <span class="story-tag">Mind-Bending Efficiency</span>
+        <h2 class="story-headline">An 8B Model Just Beat 355B-Parameter Giants — Using 95% Fewer Thinking Tokens</h2>
+        <p class="story-summary">
+          CMU and MBZUAI's SR²AM (Self-Regulated Simulative Reasoning Agentic LLM) decomposes agentic reasoning into three systems: a world model that runs forward simulations before acting, a self-regulation layer that controls planning scope and depth, and a reactive execution engine for real-time tool calls. The 8B variant achieves Pass@1 scores competitive with systems 44× larger (120–355B parameters), while the 30B variant uses 25.8–95.3% fewer reasoning tokens than comparably-sized agentic LLMs. Reinforcement learning increased the model's planning horizon by 22.8% while increasing planning frequency by only 2% — meaning it thinks deeper, not more often.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          What if your AI ran simulations in its head before making every move? A new 8B model just proved that planning beats brute scale — outperforming 355 billion-parameter giants while using 95% less chain-of-thought. Efficiency just went exponential.
+        </p>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="story">
+      <div class="story-rank">3</div>
+      <div class="story-body">
+        <span class="story-tag">AI Security</span>
+        <h2 class="story-headline">Samsung Invented a Way to Lock AI Model Weights — No Retraining, No Dataset Needed</h2>
+        <p class="story-summary">
+          Samsung Research's LoREnc is a training-free encryption framework securing foundation models and LoRA adapters through three mathematical operations: spectral truncation that suppresses dominant low-rank components in weight matrices; compensation injection into authorized adapter layers to restore suppressed information; and orthogonal reparameterization that erases structural fingerprints exploitable by model-extraction attacks. Unauthorized users receive structurally collapsed outputs indistinguishable from noise, while authorized users recover exact performance — all at under 1% additional computational overhead. No retraining or original dataset access is required, making it deployable on already-distributed weights.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          What if someone downloading your model weights got back pure noise — but your authorized users got perfect performance? Samsung just built a mathematical lock for AI that works even after the weights are already in the wild.
+        </p>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="story">
+      <div class="story-rank">4</div>
+      <div class="story-body">
+        <span class="story-tag">Hardware &amp; Wearables</span>
+        <h2 class="story-headline">Google's AI Glasses Are Almost Ready — Gemini Floats in Your Field of View</h2>
+        <p class="story-summary">
+          Google demoed prototype Android XR smart glasses at I/O 2026, overlaying Gemini-powered real-time translation, navigation, and contextual information directly into the wearer's visual field. The glasses function as a persistent ambient computing layer: Gemini reads your environment through onboard cameras, interprets live conversations, and surfaces relevant assistance without requiring you to look at a screen or speak a wake word. Reviewers noted they're "almost there" — hardware form factor and display latency are approaching consumer-ready quality, with Gemini's multimodal reasoning driving the core experience.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          Point your eyes at a foreign-language menu and Gemini translates it live. Walk a new city with directions floating mid-air. Google's AI glasses aren't science fiction anymore — they're almost shipping.
+        </p>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="story">
+      <div class="story-rank">5</div>
+      <div class="story-body">
+        <span class="story-tag">Mind-Bending Theory</span>
+        <h2 class="story-headline">Your Brain and a Stranger's Brain Share Identical Hidden Geometry — AI Just Proved It</h2>
+        <p class="story-summary">
+          Researchers at the Universitat de Barcelona applied self-supervised learning to fMRI scans and discovered that the human visual cortex has a universal geometric structure that is approximately isometric across individuals — meaning two people's neural representation spaces are identical up to a simple orthogonal rotation (the same operation as rotating a coordinate system). Without any paired data or cross-subject labels, they showed these subject-specific spaces can be aligned to a shared common coordinate system through unsupervised matrix decomposition alone. This "Platonic geometry" of perception has direct implications for brain-computer interfaces, neural decoding generalization, and understanding the mathematical foundations of consciousness.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          Two strangers' brains process vision using the exact same hidden geometry — just rotated differently. AI found the Rosetta Stone of human perception, and it turns out it's made entirely of math.
+        </p>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="story">
+      <div class="story-rank">6</div>
+      <div class="story-body">
+        <span class="story-tag">Ethics &amp; Forensics</span>
+        <h2 class="story-headline">Someone Used AI to Reconstruct a Dead Pilot's Voice From a Mathematical Image</h2>
+        <p class="story-summary">
+          Following the UPS Flight 2976 crash investigation, individuals discovered that the NTSB's public docket contained a spectrogram — a mathematical image representation of cockpit audio — which federal law doesn't prohibit publishing. Using the spectrogram image alongside the publicly available accident transcript, they employed AI tools including Codex to reverse-engineer approximations of the actual pilot voices. The NTSB temporarily shut down its entire public docket system and locked 42 active investigations pending review, exposing a fundamental regulatory gap: safety data published in one form (mathematical image) can be reconstructed into another form (audio) that was legally prohibited from publication.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          The FAA forbids publishing cockpit recordings — so the NTSB published a picture of the sound waves instead. AI turned that picture back into voices. Every public safety document is now a potential reconstruction target.
+        </p>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="story">
+      <div class="story-rank">7</div>
+      <div class="story-body">
+        <span class="story-tag">Geopolitics &amp; AI</span>
+        <h2 class="story-headline">China Forced Meta to Return a $2B AI Acquisition — Manus Raises $1B to Buy Its Freedom</h2>
+        <p class="story-summary">
+          China's National Development and Reform Commission ordered the unwind of Meta's $2B+ acquisition of Manus, an AI company with Chinese-origin technology, regardless of where Manus was legally incorporated. This is the clearest example yet of Beijing extending cross-border regulatory enforcement to AI acquisitions based purely on the national origin of the underlying technology stack — a precedent with sweeping implications for any future M&A involving China-origin AI. Manus is now raising $1B to repurchase its independence and operate autonomously, effectively making "national tech sovereignty" a new line item in AI startup deal structures worldwide.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          You can acquire an AI company, sign the papers, wire the billions — and Beijing can still make you give it back. Manus's $1B independence fund is the price of geopolitical sovereignty in the AI era.
+        </p>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="story">
+      <div class="story-rank">8</div>
+      <div class="story-body">
+        <span class="story-tag">Open-Source Drop</span>
+        <h2 class="story-headline">Real-Time AI Music Improvisation Now Runs on a Consumer Gaming Laptop</h2>
+        <p class="story-summary">
+          Live Music Diffusion Models (LMDMs) adapt standard audio diffusion architectures for interactive, real-time music generation through two key breakthroughs: block-wise Key-Value Caching that recovers the inference efficiency of discrete autoregressive models while maintaining diffusion output quality, and ARC-Forcing — a post-training paradigm that eliminates error accumulation in block-wise generation without requiring explicit reinforcement learning or reward models. The system achieves real-time latency on consumer gaming laptops and was demonstrated in live artist-AI collaboration as a "generative delay" effect, enabling dynamic timbral manipulation and harmonic response during live performance — essentially a co-improvising AI bandmate.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          An AI that listens to you play, then improvises music back in real time — generating sounds that have never existed before, on your gaming laptop. The AI jam session just became real.
+        </p>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="story">
+      <div class="story-rank">9</div>
+      <div class="story-body">
+        <span class="story-tag">Music &amp; Licensing</span>
+        <h2 class="story-headline">The First Major AI Music Licensing Deal Dropped — Spotify Lets You Legally Remix Superstars</h2>
+        <p class="story-summary">
+          Spotify and Universal Music Group struck a landmark licensing agreement enabling Spotify Premium subscribers to create AI-generated covers and remixes of UMG artists' entire catalogues. The deal establishes a structured revenue-sharing model where artists and songwriters receive compensation when their voices and musical styles are used as source material for AI generation — the first major economic framework for AI-licensed music at scale from a major label. The feature launches as a paid Premium add-on, with Canva, Adobe, and CapCut simultaneously announcing Gemini integrations for AI-powered audio and video generation, signaling that the creative AI licensing era has begun in earnest.
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          You can now legally make an AI cover of a Taylor Swift song — and Taylor Swift gets paid. The music industry just wrote the first real rulebook for the AI remix era, and it actually works for artists.
+        </p>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="story">
+      <div class="story-rank">10</div>
+      <div class="story-body">
+        <span class="story-tag">Epic AI Fail</span>
+        <h2 class="story-headline">Starbucks Quietly Killed Its 11,000-Store AI After 9 Months Because It Couldn't Tell Milk From Milk</h2>
+        <p class="story-summary">
+          Starbucks deployed an AI inventory-counting system across all 11,000+ North American stores as the centrepiece of CEO Brian Niccol's operational turnaround strategy — designed to automatically classify and count products to eliminate shortages hurting sales. After nine months in live production, the company retired the system because it could not reliably distinguish oat milk from whole milk at the SKU level, a failure of basic visual classification under real-world lighting, packaging variation, and store conditions. An internal notice read: "Starting today, Automated Counting will be retired" — milk will now be counted "the same way you count other inventory categories. With human eyes and a clipboard."
+        </p>
+        <p class="story-hook-label">60-Second Hook</p>
+        <p class="story-hook">
+          Starbucks rolled out AI inventory counting to 11,000 stores as part of its CEO's big comeback plan. Nine months later: retired. Cause of death? It could not tell oat milk from whole milk. Turns out milk is the one thing that can humble AI.
+        </p>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <p>
+      <strong>COMMUTE BRIEFING</strong> &mdash; curated by AI, for the MRT &mdash; May 25, 2026
+    </p>
+    <p style="margin-top:8px;">Sources: The Neuron Daily &middot; HuggingFace Daily Papers &middot; TechCrunch AI</p>
+  </footer>
+
+</body>
+</html>
