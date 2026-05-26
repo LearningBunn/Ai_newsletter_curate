@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commute Briefing — May 26, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0B0B0D;
+      color: #EDEAE2;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      text-align: center;
+      padding: 80px 24px 64px;
+      border-bottom: 1px solid rgba(232, 130, 58, 0.2);
+    }
+    .masthead::before {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: #E8823A;
+      margin: 0 auto 36px;
+    }
+    .masthead-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #E8823A;
+      margin-bottom: 18px;
+    }
+    .masthead-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(58px, 11vw, 96px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.025em;
+      color: #EDEAE2;
+      margin-bottom: 24px;
+    }
+    .masthead-date {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(237,234,226,0.4);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .masthead-tagline {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 19px;
+      color: rgba(237,234,226,0.45);
+      margin-top: 14px;
+    }
+
+    /* ── STORIES ── */
+    .stories {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 28px 100px;
+    }
+
+    .story {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 0 36px;
+      padding: 64px 0;
+      border-bottom: 1px solid rgba(237,234,226,0.07);
+      align-items: start;
+    }
+    .story:last-child { border-bottom: none; }
+
+    .story-rank {
+      font-family: 'Fraunces', serif;
+      font-size: 120px;
+      font-weight: 900;
+      line-height: 1;
+      color: #E8823A;
+      opacity: 0.15;
+      text-align: right;
+      padding-top: 6px;
+      user-select: none;
+    }
+
+    .story-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #E8823A;
+      background: rgba(232,130,58,0.08);
+      border: 1px solid rgba(232,130,58,0.28);
+      padding: 4px 11px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+
+    .story-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(22px, 3.2vw, 30px);
+      font-weight: 800;
+      line-height: 1.22;
+      color: #EDEAE2;
+      margin-bottom: 18px;
+      letter-spacing: -0.015em;
+    }
+
+    .story-summary {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.8;
+      color: rgba(237,234,226,0.7);
+      margin-bottom: 22px;
+    }
+
+    .story-hook {
+      border-left: 3px solid #E8823A;
+      padding: 14px 18px;
+      background: rgba(232,130,58,0.045);
+      border-radius: 0 6px 6px 0;
+    }
+    .story-hook-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #E8823A;
+      margin-bottom: 7px;
+    }
+    .story-hook p {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.65;
+      color: rgba(237,234,226,0.88);
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 36px 24px;
+      border-top: 1px solid rgba(232,130,58,0.12);
+      font-size: 11px;
+      color: rgba(237,234,226,0.28);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 560px) {
+      .story { grid-template-columns: 1fr; gap: 0; }
+      .story-rank { font-size: 72px; text-align: left; opacity: 0.1; margin-bottom: -16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <p class="masthead-eyebrow">AI Intelligence Brief</p>
+    <h1 class="masthead-title">COMMUTE<br>BRIEFING</h1>
+    <p class="masthead-date">Tuesday, May 26, 2026</p>
+    <p class="masthead-tagline">10 stories. 60 minutes. The future doesn&rsquo;t wait.</p>
+  </header>
+
+  <main class="stories">
+
+    <!-- 01 -->
+    <article class="story">
+      <div class="story-rank">01</div>
+      <div class="story-body">
+        <span class="story-tag">Physical Robotics</span>
+        <h2 class="story-headline">Last Human Standing: College Intern Beats Figure AI Robot — For the Very Last Time</h2>
+        <p class="story-summary">At Figure AI&rsquo;s warehouse, a college intern named Aime went head-to-head with one of Figure&rsquo;s bipedal humanoid robots in an 8-hour package-sorting endurance test, edging out the machine 12,924 to 12,732 &mdash; but left with a nearly broken forearm while the robot finished without a single sign of fatigue. Figure AI CEO Brett Adcock congratulated Aime but declared it would be &ldquo;the last time a human will ever win,&rdquo; signalling that purpose-trained humanoids are now operating within striking distance of human throughput in physically demanding logistics environments. The result is not a human victory &mdash; it is the clearest public benchmark yet of how close general-purpose robots are to exceeding peak human endurance in unstructured physical work.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>A college intern barely beat an AI robot in an 8-hour warehouse marathon &mdash; and walked away with a broken arm. The robot? Fresh as the moment it started. The CEO says it&rsquo;ll never happen again. The age of the superhuman warehouse has already begun.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 -->
+    <article class="story">
+      <div class="story-rank">02</div>
+      <div class="story-body">
+        <span class="story-tag">Mind-Bending Theory</span>
+        <h2 class="story-headline">Equilibrium Reasoners Crack Near-Impossible Sudoku at 99% Accuracy by Running 40,000 Layers Deep</h2>
+        <p class="story-summary">Researchers at Locus Lab introduced Equilibrium Reasoners (EqR), a test-time compute architecture that replaces standard linear inference with iterative convergence toward learned &ldquo;attractors&rdquo; &mdash; task-conditioned latent fixed points whose stable equilibria correspond to valid solutions. On Sudoku-Extreme, accuracy leaps from a baseline of 2.6% to 99% by stacking up to 40,000 equivalent computational layers at inference time, with the system dynamically allocating depth based on task difficulty: trivial problems converge in 1&ndash;5 steps, hard ones receive as many passes as necessary. The architecture scales along two independent axes &mdash; depth (more iterations) and breadth (multiple stochastic trajectories) &mdash; making it the first practical implementation of fully adaptive, difficulty-aware test-time scaling for hard reasoning tasks.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>What if an AI could keep &ldquo;thinking&rdquo; through 40,000 layers until it locks onto the right answer, and stop the moment it does? Equilibrium Reasoners just cracked near-impossible Sudoku at 99% accuracy. The implications for hard real-world reasoning problems are enormous.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 -->
+    <article class="story">
+      <div class="story-rank">03</div>
+      <div class="story-body">
+        <span class="story-tag">Open-Source Drop</span>
+        <h2 class="story-headline">LeRobot&rsquo;s $2,500 Humanoid Is Fully 3D-Printable, Fully Open-Source, and Ready for Your Garage Lab</h2>
+        <p class="story-summary">Hugging Face&rsquo;s LeRobot team released a fully open humanoid robot platform with structural parts designed to be 3D-printed at home, targeting an all-in build cost of roughly $2,500. The complete stack &mdash; hardware blueprints, firmware, simulation environments, and training pipelines &mdash; is published on GitHub, enabling independent researchers and hobbyists to build, repair, retrain, and remotely control a full bipedal robot without institutional resources. By collapsing the $100K+ barrier that previously restricted humanoid robotics research to well-funded labs, LeRobot positions itself as the democratizing force for embodied AI experimentation &mdash; giving the open-source community its first real foothold in physical intelligence.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>For the price of a decent laptop, you can now build and train your own humanoid robot at home &mdash; fully 3D-printed, fully open-source. Hugging Face&rsquo;s LeRobot just turned what used to cost $100K into a weekend project for anyone with a printer.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 04 -->
+    <article class="story">
+      <div class="story-rank">04</div>
+      <div class="story-body">
+        <span class="story-tag">Cybersecurity AI</span>
+        <h2 class="story-headline">Anthropic&rsquo;s Secret &ldquo;Mythos&rdquo; Model Found 10,000+ Software Vulnerabilities &mdash; Then Vanished From the Interface</h2>
+        <p class="story-summary">Anthropic&rsquo;s restricted cybersecurity model, internally codenamed &ldquo;Mythos,&rdquo; briefly surfaced within Claude Code and Claude Security before being quietly removed from public access &mdash; but not before observers noted it had already identified over 10,000 serious software vulnerabilities. The model appears to be a highly specialized offensive-security system operating at a sensitivity level that requires careful deployment guardrails before broader release. Its appearance and rapid disappearance suggest Anthropic is actively stress-testing both the technical capability ceiling and the policy boundaries of shipping an AI capable of industrial-scale automated vulnerability discovery to general developers.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>Anthropic has a secret AI that found 10,000+ software vulnerabilities &mdash; it appeared briefly inside Claude Code, then disappeared. When &ldquo;Mythos&rdquo; ships publicly, it won&rsquo;t just help defenders. It will permanently change the attack surface of the entire internet.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 05 -->
+    <article class="story">
+      <div class="story-rank">05</div>
+      <div class="story-body">
+        <span class="story-tag">AI Licensing Breakthrough</span>
+        <h2 class="story-headline">Spotify and Universal Music Just Built the First AI Remix Framework That Actually Pays Artists</h2>
+        <p class="story-summary">Spotify and Universal Music Group signed a landmark licensing deal enabling Premium subscribers to create AI-generated covers and remixes of UMG artists&rsquo; songs, with built-in artist consent, proper credit attribution, and automatic revenue sharing baked into the infrastructure from day one. This is the first major commercial framework to formally integrate fan-made generative audio within the existing music rights system rather than routing around it &mdash; setting a structural template for how AI-generated derivative content can coexist legally with copyright holders receiving compensation. The deal arrives as Apple Music reports that over one-third of all new song uploads are now fully AI-generated, yet account for less than 0.5% of total listening time &mdash; signalling that AI audio without a human identity still gets ignored by audiences.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>For the first time, an AI remix deal actually pays the original artists. Spotify and Universal just signed the framework that could end the copyright wars &mdash; or quietly redefine who &ldquo;owns&rdquo; a song in the age of generative audio.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 06 -->
+    <article class="story">
+      <div class="story-rank">06</div>
+      <div class="story-body">
+        <span class="story-tag">Future of Work</span>
+        <h2 class="story-headline">ClickUp Is Replacing Hundreds of Employees With Thousands of AI Agents &mdash; And Saying It Out Loud</h2>
+        <p class="story-summary">ClickUp, the nine-year-old project management unicorn, conducted mass layoffs and publicly stated it is replacing the affected employees with thousands of AI agents capable of executing the same multi-step business workflows autonomously. This is one of the first high-profile cases of an enterprise software company replacing knowledge workers &mdash; not factory-floor laborers &mdash; with agentic AI systems at scale, and doing so with full transparency. The move signals an accelerating inflection point: AI agents can now handle coordinated, judgment-requiring business processes that required human expertise as recently as 18 months ago, and the companies that built productivity software are the first to apply it to their own headcount.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>The company that built software to help humans work better just replaced hundreds of its own employees with AI agents. ClickUp is saying it openly &mdash; and it&rsquo;s the clearest proof yet that the disruption of knowledge work has already started.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 07 -->
+    <article class="story">
+      <div class="story-rank">07</div>
+      <div class="story-body">
+        <span class="story-tag">AI Wearables</span>
+        <h2 class="story-headline">Amazon&rsquo;s Bee Listens to Your Entire Day and Remembers Everything &mdash; You&rsquo;re Not Sure How to Feel About That</h2>
+        <p class="story-summary">Amazon launched &ldquo;Bee,&rdquo; an AI wearable that passively records ambient audio throughout the user&rsquo;s day, processing conversations and environmental context to generate recall summaries, proactive reminders, and intelligent follow-ups without requiring active prompting. Like competitors Limitless and Rewind, Bee trades privacy anxiety for radical situational awareness &mdash; the device remembers what was said in meetings, informal commitments, and offhand details the user would otherwise lose. TechCrunch reviewers described the experience as &ldquo;both intriguing and slightly creepy,&rdquo; raising sharp questions about consent norms in shared social and professional spaces where the wearable records passively without alerting others.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>Amazon&rsquo;s new AI wearable just listens to your whole day and remembers everything &mdash; meetings, conversations, commitments. It&rsquo;s the most convenient device you&rsquo;ll ever feel weird wearing. The ambient AI era just moved from your phone to your wrist.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 08 -->
+    <article class="story">
+      <div class="story-rank">08</div>
+      <div class="story-body">
+        <span class="story-tag">AGI Geopolitics</span>
+        <h2 class="story-headline">DeepSeek&rsquo;s Founder Names AGI as the Only Goal &mdash; and Is Raising $10 Billion to Get There</h2>
+        <p class="story-summary">DeepSeek founder Liang Wenfeng has told prospective investors that the lab&rsquo;s singular strategic mission is artificial general intelligence &mdash; AI capable of performing essentially any intellectual task a human can &mdash; and is raising its first-ever external funding at a reported $10 billion valuation to pursue it. Critically, the lab has committed to continuing to release open-source models even after the fundraise closes, positioning DeepSeek as the rare AGI-focused lab that treats frontier capability and public openness as complementary rather than contradictory. This is a direct ideological challenge to the closed, safety-justified model strategies of OpenAI and Anthropic, while simultaneously confirming that the global AGI race is now explicitly a multi-player, cross-border contest.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>DeepSeek just said the quiet part loud: their only goal is AGI, they&rsquo;re raising $10 billion, and they&rsquo;re keeping it open-source. In the race to build artificial general intelligence, China&rsquo;s most dangerous AI lab just showed its cards.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 09 -->
+    <article class="story">
+      <div class="story-rank">09</div>
+      <div class="story-body">
+        <span class="story-tag">Compute Efficiency</span>
+        <h2 class="story-headline">Good Token Hunting: New Framework Gives Visual AI Transformers an 85% Speed Boost at Zero Quality Cost</h2>
+        <p class="story-summary">Researchers at the University of Toronto published a two-stage token selection framework for visual geometry transformers that reduces quadratic attention complexity by dynamically pruning which image tokens participate in cross-frame attention computations. Inter-frame selection uses diversity scoring to guarantee broad spatial coverage across views, while intra-frame sparsification applies attention-pattern entropy to identify and discard locally uninformative tokens within each image. Applied to large-scale multi-view 3D reconstruction on 500-image scenes, the method achieves 85% compute acceleration while maintaining or improving accuracy versus the full-attention baseline &mdash; and requires no architectural retraining, making it a drop-in efficiency upgrade for any existing visual transformer pipeline.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>85% faster with zero quality loss &mdash; &ldquo;Good Token Hunting&rdquo; makes visual AI skip the boring parts of every image and concentrate compute only where it matters. For anyone building 3D scene reconstruction or large-scale vision models, this changes the math on what&rsquo;s even feasible.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="story">
+      <div class="story-rank">10</div>
+      <div class="story-body">
+        <span class="story-tag">AI &amp; Society</span>
+        <h2 class="story-headline">The Pope Walked Into the Vatican With an Anthropic Co-Founder and Changed the AI Ethics Conversation</h2>
+        <p class="story-summary">Pope Leo XIV published &ldquo;Magnifica Humanitas&rdquo; (&ldquo;Magnificent Humanity&rdquo;), his first papal encyclical on protecting human dignity in the age of artificial intelligence, and personally presented it alongside a co-founder of Anthropic at the Vatican. The document frames AI not as a narrow technology question but as a systemic lens exposing deeper structural crises: power concentration, democratic erosion, and the commodification of human cognition by institutions with unchecked scale. TechCrunch notes the encyclical&rsquo;s most provocative move is that it &ldquo;is not really about AI&rdquo; &mdash; it uses AI as the entry point for a sweeping moral indictment of how powerful organizations, including tech companies, accumulate societal influence at the direct expense of individual autonomy and institutional balance.</p>
+        <div class="story-hook">
+          <p class="story-hook-label">60-Second Hook</p>
+          <p>The Pope just co-launched an AI manifesto with an Anthropic co-founder at the Vatican &mdash; and it reads less like a technology critique and more like a moral reckoning with Silicon Valley&rsquo;s grip on society. Even the Catholic Church is trying to put guardrails on the AI industry.</p>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="footer">
+    Commute Briefing &nbsp;&middot;&nbsp; May 26, 2026 &nbsp;&middot;&nbsp; 10 Stories &bull; Sources: The Neuron, TechCrunch AI, Hugging Face Daily Papers
+  </footer>
+
+</body>
+</html>
